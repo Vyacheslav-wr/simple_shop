@@ -22,7 +22,6 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void save(Product product) {
-
         jdbcTemplate.update("INSERT INTO products(name, definition, order)" +
                 " VALUE (?,?,?)", product.getName(), product.getDefinition(), product.getOrder());
 
@@ -30,9 +29,8 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void update(Product product) {
-
-        jdbcTemplate.update("UPDATE products SET name=?, definition=?, order=?",
-                product.getName(), product.getDefinition(), product.getOrder());
+        jdbcTemplate.update("UPDATE products SET name=?, definition=?, order=? WHERE id=?",
+                product.getName(), product.getDefinition(), product.getOrder(), product.getId());
     }
 
     @Override
@@ -42,8 +40,9 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> getById(Long id) {
-
-       return jdbcTemplate.query("SELECT * FROM products WHERE id=?", new ProductMapper(), id).stream().findFirst();
+        return jdbcTemplate.query("SELECT * FROM products WHERE id=?", new ProductMapper(), id)
+                .stream()
+                .findFirst();
 
     }
 

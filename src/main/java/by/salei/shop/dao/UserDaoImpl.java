@@ -1,0 +1,47 @@
+package by.salei.shop.dao;
+
+import by.salei.shop.dao.api.UserDao;
+import by.salei.shop.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public class UserDaoImpl implements UserDao {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public UserDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public void save(User user) {
+        jdbcTemplate.update("INSERT INTO users(login, password, role, status) VALUES(?,?,?,?)",
+                user.getLogin(), user.getPassword(), user.getRole(), user.getStatus());
+    }
+
+    @Override
+    public void update(User user) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public Optional<User> getById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> getAll() {
+        return null;
+    }
+}
