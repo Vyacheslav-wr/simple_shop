@@ -22,14 +22,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void save(Order order) {
-        jdbcTemplate.update("INSERT INTO orders(id, order_date, status) VALUES (?,?,?)",
-                order.getId(),order.getDate(), order.getStatus());
+        jdbcTemplate.update("INSERT INTO orders(id, order_date, status, user) VALUES (?,?,?,?)",
+                order.getId(),order.getDate(), order.getStatus(), order.getUser());
     }
 
     @Override
     public void update(Order order) {
-        jdbcTemplate.update("UPDATE orders SET date=?, status=? WHERE id=?",
-                order.getDate(), order.getStatus() ,order.getId());
+        jdbcTemplate.update("UPDATE orders SET date=?, status=?, user=? WHERE id=?",
+                order.getDate(), order.getStatus() ,order.getId(), order.getUser());
     }
 
     @Override

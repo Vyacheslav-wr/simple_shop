@@ -1,6 +1,7 @@
 package by.salei.shop.dao;
 
 import by.salei.shop.dao.api.UserDao;
+import by.salei.shop.dao.mapper.UserMapper;
 import by.salei.shop.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,21 +28,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-
+        jdbcTemplate.update("UPDATE users SET login=?, password=?, role=?, status=? WHERE id=?",
+                user.getLogin(), user.getPassword(), user.getRole(), user.getStatus(), user.getId());
     }
 
     @Override
     public void delete(Long id) {
-
+        jdbcTemplate.update("DELETE FROM users WHERE id=?", id);
     }
 
     @Override
     public Optional<User> getById(Long id) {
-        return Optional.empty();
+        return jdbcTemplate.query("SELECT * FROM users WHERE id=?", new UserMapper(), id)
+                .stream()
+                .findFirst();
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return jdbcTemplate.query("SELECT * FROM users", new UserMapper());
     }
 }

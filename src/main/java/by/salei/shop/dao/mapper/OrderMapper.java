@@ -1,6 +1,5 @@
 package by.salei.shop.dao.mapper;
 
-import by.salei.shop.dao.api.OrderDao;
 import by.salei.shop.entity.Order;
 import by.salei.shop.entity.OrderStatus;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,6 +14,7 @@ public class OrderMapper implements RowMapper<Order> {
         return Order.builder()
                 .id(rs.getLong("id"))
                 .date(rs.getDate("date"))
+                .user(rs.getLong("user"))
                 .status(OrderStatus.valueOf(rs.getString("status")))
                 .build();
     }
